@@ -1,0 +1,438 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "description": "Opis API dla zarządzania firmami i pracownikami",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/business": {
+            "get": {
+                "summary": "Pobierz listę firm",
+                "operationId": "24bc3ee8af9dc1273fd37fbeca3fed9c",
+                "responses": {
+                    "200": {
+                        "description": "Lista firm"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Utwórz nową firmę",
+                "operationId": "fb0e2c236bace15847ddb443b057a9a6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nowa Firma"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Firma utworzona"
+                    }
+                }
+            }
+        },
+        "/api/business/{id}": {
+            "get": {
+                "summary": "Pobierz szczegóły firmy",
+                "operationId": "930c013426d99f5d6d32dbcd14ab2bbe",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID firmy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Szczegóły firmy"
+                    },
+                    "404": {
+                        "description": "Firma nie znaleziona"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Zaktualizuj firmę",
+                "operationId": "8ffc4380813579bbd4aa1c84ce28a2b3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID firmy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Zaktualizowana Firma"
+                                    },
+                                    "number": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Ulica 1"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Miasto"
+                                    },
+                                    "zip_code": {
+                                        "type": "string",
+                                        "example": "00-000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Firma zaktualizowana"
+                    },
+                    "500": {
+                        "description": "Błąd podczas aktualizacji firmy"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Usuń firmę",
+                "operationId": "32354f57a0ac56d089eae582fa2ecc33",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID firmy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Firma usunięta"
+                    }
+                }
+            }
+        },
+        "/api/business/{id}/employee": {
+            "get": {
+                "summary": "Pobierz pracowników firmy",
+                "operationId": "c9181ac515d93690badd34015b2c9c0b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID firmy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista pracowników"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Dodaj nowego pracownika do firmy",
+                "operationId": "0240abb048567906eb0cb477d0772aa4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID firmy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "surname",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Jan"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "example": "Kowalski"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "jan.kowalski@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Pracownik dodany"
+                    }
+                }
+            }
+        },
+        "/api/business/{businessId}/employee/{employeeId}": {
+            "post": {
+                "summary": "Dodaj istniejącego pracownika do firmy",
+                "operationId": "662b88563e7dc31009b3f5f0bb70b95b",
+                "parameters": [
+                    {
+                        "name": "businessId",
+                        "in": "path",
+                        "description": "ID firmy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "employeeId",
+                        "in": "path",
+                        "description": "ID pracownika",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pracownik dodany do firmy"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Usuń pracownika z firmy",
+                "operationId": "4ee9e149650b903f2b0e92250b9cc0b3",
+                "parameters": [
+                    {
+                        "name": "businessId",
+                        "in": "path",
+                        "description": "ID firmy",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "employeeId",
+                        "in": "path",
+                        "description": "ID pracownika",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pracownik usunięty z firmy"
+                    }
+                }
+            }
+        },
+        "/api/employee": {
+            "get": {
+                "summary": "Pobierz listę pracowników",
+                "operationId": "aec9115c2e1b82bd5139f3ba90d8cd76",
+                "responses": {
+                    "200": {
+                        "description": "Lista pracowników"
+                    },
+                    "404": {
+                        "description": "Nie znaleziono pracowników"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Dodaj nowego pracownika",
+                "operationId": "6a4f1e0943433f32bb808e136da78430",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "surname",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Jan"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "example": "Kowalski"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "jan.kowalski@example.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Pracownik dodany"
+                    },
+                    "500": {
+                        "description": "Błąd podczas dodawania pracownika"
+                    }
+                }
+            }
+        },
+        "/api/employee/{id}": {
+            "get": {
+                "summary": "Pobierz szczegóły pracownika",
+                "operationId": "7002cd80d065e00fc43b1794ed7b4d4f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID pracownika",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Szczegóły pracownika"
+                    },
+                    "404": {
+                        "description": "Pracownik nie znaleziony"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Zaktualizuj dane pracownika",
+                "operationId": "b1f58be54bff0320d2f19085bf535278",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID pracownika",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Jan"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "example": "Kowalski"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "jan.kowalski@example.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Dane pracownika zaktualizowane"
+                    },
+                    "500": {
+                        "description": "Błąd podczas aktualizacji danych pracownika"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Usuń pracownika",
+                "operationId": "3d61663792ac65f6dbcbf97c9e90e7e2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID pracownika",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pracownik usunięty"
+                    },
+                    "500": {
+                        "description": "Błąd podczas usuwania pracownika"
+                    }
+                }
+            }
+        }
+    }
+}

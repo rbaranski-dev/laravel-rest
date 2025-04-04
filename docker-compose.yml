@@ -11,7 +11,7 @@ services:
         restart: unless-stopped
         tty: true
         ports:
-            - "8001:8001"
+            - "${HTTP_HOST_PORT}:8001"
         volumes: 
             - ./src:/var/www/app
             - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
@@ -30,11 +30,11 @@ services:
         ports: 
             - "${MYSQL_HOST_PORT}:${MYSQL_DOCKER_CONTAINER_PORT}"
         volumes: 
-            - ./mysql:/var/lib/mysql
+            - mysql-data:/var/lib/mysql
         environment: 
-            MYSQL_DATABASE: laravel_docker
-            MYSQL_USER: user
-            MYSQL_PASSWORD: user
+            MYSQL_DATABASE: "${PHP_DATABASE_NAME}"
+            MYSQL_USER: "${PHP_DATABASE_USERNAME}"
+            MYSQL_PASSWORD: "${PHP_DATABASE_PASSWORD}"
             MYSQL_ROOT_PASSWORD: root
             SERVICE_TAGS: dev
             SERVICE_NAME: mysql
@@ -51,7 +51,16 @@ services:
         working_dir: /var/www/app
         volumes: 
             - ./src:/var/www/app
+        environment: 
+            PHP_APP_NAME: "${PHP_APP_NAME}"
+            PHP_APP_PORT: "${HTTP_HOST_PORT}"
+            MYSQL_PORT: "${MYSQL_DOCKER_CONTAINER_PORT}"
+            MYSQL_DATABASE: "${PHP_DATABASE_NAME}"
+            MYSQL_USER: "${PHP_DATABASE_USERNAME}"
+            MYSQL_PASSWORD: "${PHP_DATABASE_PASSWORD}"
         ports: 
             - "${PHP_HOST_PORT}:${PHP_DOCKER_CONTAINER_PORT}"
         networks: 
             - laravel
+volumes:
+  mysql-data:
